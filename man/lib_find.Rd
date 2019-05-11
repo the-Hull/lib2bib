@@ -15,7 +15,7 @@ lib_find(path = ".", verbose = FALSE)
 Returns a list containing all packages used in file(s) supplied by path
 }
 \description{
-Find all packages used via _library()_ in your project, a folder, or file.
+Find all packages used via library(), require() or with package::function() in your project, a folder, or in a file (.R, .Rmd, .Rmarkdown; not case sensitive).
 }
 \examples{
 \dontrun{lib_find()}

@@ -1,6 +1,6 @@
 #' Find all packages used in scripts
 #'
-#' @description Find all packages used via _library()_ in your project, a folder, or file.
+#' @description Find all packages used via library(), require() or with package::function() in your project, a folder, or in a file (.R, .Rmd, .Rmarkdown; not case sensitive).
 #' @param path Charater. Defines path to project file, a folder or an individual rmarkdown or script file. Defaults to current working directory
 #' @param verbose Logical. Set as TRUE if results from all files are to be reported
 #'
@@ -8,8 +8,10 @@
 #' @export
 #'
 #' @rdname lib_find
+#' @usage lib_find(path = ".", verbose = FALSE)
 #'
 #' @importFrom attempt stop_if_not
+#' @importFrom knitr purl
 
 #'
 #' @examples \dontrun{lib_find()}
@@ -53,9 +55,10 @@ attempt::stop_if_not(path, is.character, msg = "Please supply a character string
     libs <- sapply(files, FUN = function(x) {
 
         if(check_if_rmd(x)){
+
             cat("is RMD!!!!")
             temp_r_extracted <- tempfile(fileext  = ".R")
-            knitr::purl(x, output = temp_r_extracted)
+            knitr::purl(x, output = temp_r_extracted, quiet = TRUE)
             conn <- file(temp_r_extracted)
             text <- readLines(conn, warn = FALSE)
             unlink(temp_r_extracted)
@@ -109,8 +112,16 @@ attempt::stop_if_not(path, is.character, msg = "Please supply a character string
     # by subsequently cleaning  lists with strings of 0 length
     clean_libs <- clean_libs[sapply(clean_libs, function(x){any(nchar(x) != 0)})]
 
+    # drop NAs (from stringr?)
+    clean_libs <- clean_libs[!is.null(clean_libs)]
+
+
+
+
+    clean_libs <- unique(as.character(unlist(clean_libs)))
 
     # print message on scanned files
+
     if(verbose){
         cat(paste0("scanned ",
                    length(files),
@@ -118,11 +129,9 @@ attempt::stop_if_not(path, is.character, msg = "Please supply a character string
                    length(libs) - length(clean_libs),
                    " had no package entry.\n",
                    "Used packages are:\n"
-                   ),
-            as.character(unlist(clean_libs)))
+        ),
+        clean_libs)
     }
-
-    clean_libs <- as.character(unlist(clean_libs))
 
 
     # if(length(clean_libs) == 0){
@@ -135,10 +144,10 @@ attempt::stop_if_not(path, is.character, msg = "Please supply a character string
 
     # } else {
 
-    info_libs <- installed.packages()[installed.packages()[,"Package"] %in%
+    info_libs <- utils::installed.packages()[utils::installed.packages()[,"Package"] %in%
                                           clean_libs,]
 
-    return(info_libs)
+    return(as.data.frame(info_libs, stringsAsFactors = FALSE))
 
     # }
 
