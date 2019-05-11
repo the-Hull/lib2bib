@@ -3,6 +3,7 @@
 export(lib_find)
 export(lib_interactive)
 export(lib_print)
+export(lib_write)
 importFrom(attempt,stop_if_not)
 importFrom(knitr,purl)
 importFrom(purrr,map2)

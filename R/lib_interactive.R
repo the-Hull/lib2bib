@@ -1,32 +1,50 @@
 
 #' Interactively choose which citations to keep
 #'
-#' @param libs ab
-#' @param textformat ab
+#' @param libs Character (string) of package name(s) or Dataframe with a column "Package".
+#' @param textformat Logical. Print as text version or as BibTeX.
 #'
-#' @return Opens shiny
+#' @description Opens an interactive shiny interface. Select desired packages, print them to console, copy them to the  clipboard and/or save them to disk (write new file or append). Note, that the download only captures entries visible in the table currently Incries number of rows shown to select from and write all packages to file.
+#'
+#'
+#' @usage lib_interactive(libs,textformat = TRUE)
+#' @source relies on code in https://github.com/rstudio/DT/issues/93
 #'
 #' @export
 #'
-#' @examples \dontrun{lib_interactive(libs)}
+#' @examples \dontrun{
+#'
+#' lib_interactive(libs)
+#' }
 lib_interactive <- function(libs,textformat = TRUE){
     # require(shiny)
     # require(DT)
+    # this code is re-used from https://github.com/rstudio/DT/issues/93
 
 
 
     shinyApp(
         ui = shiny::fluidPage(
+            shiny::h3("Package Bibliography"),
+            shiny::h5("Select and save"),
+
+            shiny::actionButton("done", "done"),
+            shiny::downloadButton('writebib', 'Write Bibliography to File'),
+            shiny::br(),
+            shiny::br(),
             DT::dataTableOutput('x1'),
             # verbatimTextOutput('x2'),
-            shiny::actionButton("done", "done"),
             shiny::tags$head(
                 shiny::tags$style(shiny::HTML('#done{background-color:darkgray;
+                            color:white}')),
+                shiny::tags$style(shiny::HTML('#writebib{background-color:darkblue;
                             color:white}'))
             )),
 
 
         server = function(input, output) {
+
+
             # create a character vector of shiny inputs
             shinyInput = function(FUN, len, id, ...) {
                 inputs = character(len)
@@ -54,37 +72,41 @@ lib_interactive <- function(libs,textformat = TRUE){
             # )
 
 
-            if(textformat){
+            # if(textformat){
+            #
+            #     libs_short <- unlist(lib_print(libs, textformat = TRUE))
+            #
+            #     # grab single and repeated names
+            #     names(libs_short) <- rep.int(names(sapply(lib_print(libs,
+            #                                                         textformat = TRUE),
+            #                                               length)),
+            #                                  times = sapply(lib_print(libs,
+            #                                                           textformat = TRUE),
+            #                                                 length))
+            #
+            #
+            # } else if(isFALSE(textformat)){
+            #
+            #     # makes a list with one entry for each citation
+            #     # packages with multiple citations get on entry for each
+            #     # provided citation
+            #
+            #
+            #     libs_short <- lapply(
+            #         make_bibtex_list(
+            #             lib_print(libs,
+            #                   textformat = FALSE)),
+            #         paste,
+            #         collapse = "\n"
+            #     )
+            #
+            #     libs_short <- unlist(libs_short)
+            #
+            # }
 
-                libs_short <- unlist(lib_print(libs, textformat = TRUE))
-
-                # grab single and repeated names
-                names(libs_short) <- rep.int(names(sapply(lib_print(libs,
-                                                                    textformat = TRUE),
-                                                          length)),
-                                             times = sapply(lib_print(libs,
-                                                                      textformat = TRUE),
-                                                            length))
 
 
-            } else if(isFALSE(textformat)){
-
-                # makes a list with one entry for each citation
-                # packages with multiple citations get on entry for each
-                # provided citation
-
-
-                libs_short <- lapply(
-                    make_bibtex_list(
-                        lib_print(libs,
-                              textformat = FALSE)),
-                    paste,
-                    collapse = "\n"
-                )
-
-                libs_short <- unlist(libs_short)
-
-            }
+            libs_short <- make_pckgs_vector(libs, textformat = textformat)
 
             for_print <- data.frame(Package = names(libs_short),
                                     # cite_key = shinyInput(textInput,
@@ -128,16 +150,49 @@ lib_interactive <- function(libs,textformat = TRUE){
                 escape = FALSE,
                 selection = 'none',
                 options = list(
-                    preDrawCallback = JS('function() { Shiny.unbindAll(this.api().table().node()); }'),
-                    drawCallback = JS('function() { Shiny.bindAll(this.api().table().node()); } ')
+                    iDisplayLength = nrow(for_print),
+                    preDrawCallback = DT::JS('function() { Shiny.unbindAll(this.api().table().node()); }'),
+                    drawCallback = DT::JS('function() { Shiny.bindAll(this.api().table().node()); } ')
                 )
             )
 
 
             # print the values of inputs
-            output$x2 = shiny::renderPrint({
-                data.frame(v1 = shinyValue('v1_', 100), v2 = shinyValue('v2_', 100))
-            })
+            # output$x2 = shiny::renderPrint({
+            #     data.frame(v1 = shinyValue('v1_', 100), v2 = shinyValue('v2_', 100))
+            # })
+
+
+
+            output$writebib <- shiny::downloadHandler(
+
+                filename = function(){
+
+                    ext <- ".bib"
+                    if(textformat){
+                        ext <- ".txt"
+                    }
+
+                    # ext <- ifelse(textformat, ".txt", ".bib")
+                    paste0("pckg_bibliography", ext)},
+
+
+                content = function(file){
+
+                    packages_to_print <- for_print$Package[shinyValue('Print_',
+                                                                      nrow(for_print))]
+
+                    for_write <- libs[libs$Package %in% packages_to_print, ]
+
+                    lib_write(for_write,
+                              path_out = file,
+                              append = FALSE,
+                              textformat = textformat)
+
+
+                }
+
+                )
 
 
             shiny::observeEvent(input$done, {

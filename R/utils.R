@@ -129,3 +129,64 @@ make_bibtex_list <- function(libs_bibtex){
 
 
 }
+
+
+
+make_pckgs_vector <- function(libs, textformat = TRUE){
+
+    if(textformat){
+
+        libs_short <- unlist(lib_print(libs,
+                                       textformat = TRUE,
+                                       silent = TRUE))
+
+        # grab single and repeated names
+        names(libs_short) <- rep.int(names(sapply(lib_print(libs,
+                                                            textformat = TRUE,
+                                                            silent = TRUE),
+                                                  length)),
+                                     times = sapply(lib_print(libs,
+                                                              textformat = TRUE,
+                                                              silent = TRUE),
+                                                    length))
+
+
+    } else if(isFALSE(textformat)){
+
+        # makes a list with one entry for each citation
+        # packages with multiple citations get on entry for each
+        # provided citation
+
+
+        libs_short <- lapply(
+            make_bibtex_list(
+                lib_print(libs,
+                          textformat = FALSE,
+                          silent = TRUE)),
+            paste,
+            collapse = "\n"
+        )
+
+        libs_short <- unlist(libs_short)
+
+
+    }
+
+
+    return(libs_short)
+}
+
+
+
+check_if_libs_is_df <- function(libs){
+    # check for object type and adjust call to citation
+    if(is.data.frame(libs)){
+        citations <- lapply(libs$Package, citation)
+
+    } else {
+        citations <- lapply(libs, citation)
+
+    }
+
+    return(citations)
+}

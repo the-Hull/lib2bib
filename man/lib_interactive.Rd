@@ -4,19 +4,19 @@
 \alias{lib_interactive}
 \title{Interactively choose which citations to keep}
 \usage{
-lib_interactive(libs, textformat = TRUE)
+lib_interactive(libs,textformat = TRUE)
 }
 \arguments{
-\item{libs}{ab}
+\item{libs}{Character (string) of package name(s) or Dataframe with a column "Package".}
 
-\item{textformat}{ab}
-}
-\value{
-Opens shiny
+\item{textformat}{Logical. Print as text version or as BibTeX.}
 }
 \description{
-Interactively choose which citations to keep
+Opens an interactive shiny interface. Select desired packages, print them to console, copy them to the  clipboard and/or save them to disk (write new file or append). Note, that the download only captures entries visible in the table currently Incries number of rows shown to select from and write all packages to file.
 }
 \examples{
-\dontrun{lib_interactive(libs)}
+\dontrun{
+
+lib_interactive(libs)
+}
 }

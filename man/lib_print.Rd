@@ -4,18 +4,20 @@
 \alias{lib_print}
 \title{Print package citations}
 \usage{
-lib_print(libs, textformat = TRUE)
+lib_print(libs, textformat = TRUE, silent = FALSE)
 }
 \arguments{
 \item{libs}{Character (string) of package name(s) or Dataframe with a column "Package".}
 
 \item{textformat}{Logical. Print as text version or as BibTeX.}
+
+\item{silent}{Logical. If TRUE, will output a list for subsequent use. If FALSE, prints bibliography (ready for e.g. copy-paste or capture).}
 }
 \value{
 Returns a list of citations, either in text or BibTeX format.
 }
 \description{
-Print package citations
+Print bibliography of all identified packages, or output a list for subsequent use.
 }
 \examples{
 lib_print("base")

@@ -1,6 +1,8 @@
 #' Find all packages used in scripts
 #'
 #' @description Find all packages used via library(), require() or with package::function() in your project, a folder, or in a file (.R, .Rmd, .Rmarkdown; not case sensitive).
+#'
+#'
 #' @param path Charater. Defines path to project file, a folder or an individual rmarkdown or script file. Defaults to current working directory
 #' @param verbose Logical. Set as TRUE if results from all files are to be reported
 #'
@@ -56,7 +58,6 @@ attempt::stop_if_not(path, is.character, msg = "Please supply a character string
 
         if(check_if_rmd(x)){
 
-            cat("is RMD!!!!")
             temp_r_extracted <- tempfile(fileext  = ".R")
             knitr::purl(x, output = temp_r_extracted, quiet = TRUE)
             conn <- file(temp_r_extracted)
@@ -74,18 +75,6 @@ attempt::stop_if_not(path, is.character, msg = "Please supply a character string
 
         close(conn)
 
-
-        # # drop comments
-        # text <- text[!grepl("^(#).*$", text)]
-        # # grab packages (loading)
-        # text <- text[grepl("(library|require)\\(([a-zA-Z0-9]*)\\)", text)]
-        # pkgs <- gsub(".*(library|require)\\(([a-zA-Z0-9]*)\\).*", "\\2", text)
-        #
-        # # grab packages (explicit)
-        # text <- text[grepl("(library|require)\\(([a-zA-Z0-9]*)\\)", text)]
-        # pkgs <- rbind(pkgs,
-        #               gsub(".*(library|require)\\(([a-zA-Z0-9]*)\\).*", "\\2", text)
-        #               )
 
         pkgs <- extract_packages(text)
         unique(pkgs)
@@ -125,9 +114,10 @@ attempt::stop_if_not(path, is.character, msg = "Please supply a character string
     if(verbose){
         cat(paste0("scanned ",
                    length(files),
-                   " files, of which ",
-                   length(libs) - length(clean_libs),
-                   " had no package entry.\n",
+                   " files, and found",
+                   length(clean_libs),
+                   " package entries \n
+                   using either library, require, or double-colon notation.\n",
                    "Used packages are:\n"
         ),
         clean_libs)
