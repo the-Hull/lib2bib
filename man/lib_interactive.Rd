@@ -3,6 +3,9 @@
 \name{lib_interactive}
 \alias{lib_interactive}
 \title{Interactively choose which citations to keep}
+\source{
+relies on code in https://github.com/rstudio/DT/issues/93
+}
 \usage{
 lib_interactive(libs,textformat = TRUE)
 }

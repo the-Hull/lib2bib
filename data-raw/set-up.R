@@ -51,10 +51,20 @@ use_readme_md()
 # use_package("curl")
 # use_package("attempt")
 #
-# use_package("purrr")
 
 # Clean your description
+use_package("attempt")
+use_package("stringi")
+use_package("knitr")
+use_package("purrr")
+use_package("DT", type = "suggests")
+use_package("shiny", type = "suggests")
+
+
+
+
 use_tidy_description()
 
 
-AOI::getAOI("Yosemite")
+
+

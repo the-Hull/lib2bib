@@ -17,10 +17,19 @@
 #' lib_interactive(libs)
 #' }
 lib_interactive <- function(libs,textformat = TRUE){
-    # require(shiny)
-    # require(DT)
+
     # this code is re-used from https://github.com/rstudio/DT/issues/93
 
+
+    if (!requireNamespace("DT", quietly = TRUE)) {
+        stop("Package \"DT\" needed for this function to work. Please install it.",
+             call. = FALSE)
+    }
+
+    if (!requireNamespace("shiny", quietly = TRUE)) {
+        stop("Package \"shiny\" needed for this function to work. Please install it.",
+             call. = FALSE)
+    }
 
 
     shinyApp(
