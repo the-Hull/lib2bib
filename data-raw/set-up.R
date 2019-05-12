@@ -64,7 +64,7 @@ use_package("shiny", type = "suggests")
 
 
 use_tidy_description()
-
+use_travis()
 
 
 
