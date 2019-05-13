@@ -1,7 +1,7 @@
 # lib2bib
 
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![Travis build status](https://travis-ci.org/the-Hull/libtobib.svg?branch=master)](https://travis-ci.org/the-Hull/libtobib)
+[![Travis build status](https://travis-ci.org/the-Hull/lib2bib.svg?branch=master)](https://travis-ci.org/the-Hull/lib2bib)
 
 The goal of lib2bib is to ...
 
