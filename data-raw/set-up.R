@@ -19,7 +19,8 @@ my_desc <- description$new("!new")
 my_desc$set("Package", "lib2bib")
 
 #Set your name
-my_desc$set("Authors@R", "person('Alexander', 'Hurley', email = 'agl.hurley@gmail.com', role = c('cre', 'aut'))")
+my_desc$set("Authors@R",
+            "person('Alexander', 'Hurley', email = 'agl.hurley@gmail.com', role = c('cre', 'aut'), comment = c(ORCID = 0000-0002-9641-2805))")
 
 # Remove some author fields
 my_desc$del("Maintainer")
@@ -30,10 +31,10 @@ my_desc$set_version("0.0.0.9000")
 # The title of your package
 my_desc$set(Title = "Get your packages into your bibliography")
 # The description of your package
-my_desc$set(Description = "Create LaTeX-conform .bib files from packages used in your analyses")
+my_desc$set(Description = "Identify all packages used in a (project) folder or file, and generate plain-text or bibtex bibliographies. An interactive app allows selecting a subset of packages to save.")
 # The urls
-my_desc$set("URL", "http://this")
-my_desc$set("BugReports", "http://that")
+my_desc$set("URL", "https://github.com/the-Hull/lib2bib/")
+my_desc$set("BugReports", "https://github.com/the-Hull/lib2bib/issues")
 # Save everyting
 my_desc$write(file = "DESCRIPTION")
 
@@ -65,6 +66,5 @@ use_package("shiny", type = "suggests")
 
 use_tidy_description()
 use_travis()
-
-
+pkgdown::build_site()
 
