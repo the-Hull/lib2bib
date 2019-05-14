@@ -1,4 +1,4 @@
-# lib2bib
+# lib2bib <img src="img/lib2bib_logo.png" align="right" />
 
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![Travis build status](https://travis-ci.org/the-Hull/lib2bib.svg?branch=master)](https://travis-ci.org/the-Hull/lib2bib)
@@ -13,6 +13,9 @@ Hence, some recognition goes a long way.
 
 An interactive app (via `lib_interactive()`) allows selecting packages for writing to a file.
 
+![](./img/lib_interactive.png)
+
+
 ## Installation
 
 You can install an early development  version of `lib2bib` from [GitHub](https://github.com/the-hull/lib2bib) with:
@@ -23,7 +26,7 @@ remotes::install_github("lib2bib")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is the simple workflow to get your package library going:
 
 ``` r
 
