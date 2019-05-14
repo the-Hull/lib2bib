@@ -71,18 +71,39 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#lib2bib" class="anchor"></a>lib2bib</h1></div>
 
-<p>The goal of lib2bib is to …</p>
+<p>The package <code>lib2bib</code> aims to facilitate acknowledging developers of (open-source) software in the #rstats community. Package development and maintenance require effort and time - most contributions are typically unpaid. Hence, some recognition goes a long way. <code>lib2bib</code> allows:</p>
+<ul>
+<li>identifying all packages used in a directory/project, script or <code>Rmarkdown</code> files,</li>
+<li>printing them to console (or to a <code>list</code>)</li>
+<li>writing a <code>.txt</code> or <code>.bib</code> file with the package bibliography</li>
+</ul>
+<p>An interactive app (via <code><a href="reference/lib_interactive.html">lib_interactive()</a></code>) allows selecting packages for writing to a file.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>You can install the released version of lib2bib from <a href="https://CRAN.R-project.org">CRAN</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"lib2bib"</span>)</a></code></pre></div>
+<p>You can install an early development version of <code>lib2bib</code> from <a href="https://github.com/the-hull/lib2bib">GitHub</a> with:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"lib2bib"</span>)</a></code></pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
 <p>This is a basic example which shows you how to solve a common problem:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">## basic example code</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">libs &lt;-<span class="st"> </span><span class="kw"><a href="reference/lib_find.html">lib_find</a></span>(<span class="dt">path =</span> <span class="st">"."</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co"># as text</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw"><a href="reference/lib_print.html">lib_print</a></span>(libs, <span class="dt">textformat =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co"># as bibtex</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="kw"><a href="reference/lib_print.html">lib_print</a></span>(libs, <span class="dt">textformat =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co"># to write to a file either</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="kw"><a href="reference/lib_write.html">lib_write</a></span>(<span class="dt">libs =</span> libs, </a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">          <span class="st">"package.bib"</span>,</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">          <span class="dt">append =</span> <span class="ot">FALSE</span>, </a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">          <span class="dt">textformat =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co"># or</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="kw"><a href="reference/lib_interactive.html">lib_interactive</a></span>(<span class="dt">libs =</span> libs, <span class="dt">textformat =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"></a></code></pre></div>
 </div>
 </div>
   </div>
@@ -101,7 +122,7 @@
 <h2>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small>{{ License }}</small></li>
+<li><small><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></small></li>
 </ul>
 </div>
 <div class="developers">
