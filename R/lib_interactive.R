@@ -32,7 +32,7 @@ lib_interactive <- function(libs,textformat = TRUE){
     }
 
 
-    shinyApp(
+    shiny::shinyApp(
         ui = shiny::fluidPage(
             shiny::h3("Package Bibliography"),
             shiny::h5("Select and save"),

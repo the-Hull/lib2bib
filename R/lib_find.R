@@ -4,16 +4,20 @@
 #'
 #'
 #' @param path Charater. Defines path to project file, a folder or an individual rmarkdown or script file. Defaults to current working directory
-#' @param verbose Logical. Set as TRUE if results from all files are to be reported
+#' @param verbose Logical. Set to TRUE for an informative message.
 #'
-#' @return Returns a list containing all packages used in file(s) supplied by path
+#' @return Returns a data.frame resulting from a call to installed.packages, containing all packages used in file(s) supplied by path.
 #' @export
 #'
 #' @rdname lib_find
 #' @usage lib_find(path = ".", verbose = FALSE)
 #'
 #' @importFrom attempt stop_if_not
+#' @importFrom attempt stop_if
 #' @importFrom knitr purl
+#' @importFrom crayon red
+#' @importFrom crayon blue
+#' @importFrom crayon green
 
 #'
 #' @examples \dontrun{lib_find()}
@@ -50,7 +54,8 @@ attempt::stop_if_not(path, is.character, msg = "Please supply a character string
     }
 
 
-
+    attempt::stop_if(length(files),  ~ . == 0,
+                     msg = cat(paste0(crayon::red("Couldn't find any R scripts or markdown files."), " Please supply a different path and try again.")))
 
 
     # parse
@@ -84,9 +89,9 @@ attempt::stop_if_not(path, is.character, msg = "Please supply a character string
 
     if(all(sapply(libs, length) == 0)){
 
-        stop(paste0("scanned ",
-                    length(files),
-                    " file(s) and found no explicit package use"))
+        stop(cat(paste0("scanned ",
+                    crayon::blue(length(files)),
+                    " file(s) and found no explicit package use")))
 
 
 
@@ -95,10 +100,10 @@ attempt::stop_if_not(path, is.character, msg = "Please supply a character string
 
     # clean resulting list
 
-    # by dropping 0 length list element
+    # drop 0 length list element
     clean_libs <- libs[sapply(libs, function(x){length(x) > 0})]
 
-    # by subsequently cleaning  lists with strings of 0 length
+    # drop lists with strings of 0 length
     clean_libs <- clean_libs[sapply(clean_libs, function(x){any(nchar(x) != 0)})]
 
     # drop NAs (from stringr?)
@@ -113,23 +118,16 @@ attempt::stop_if_not(path, is.character, msg = "Please supply a character string
 
     if(verbose){
         cat(paste0("scanned ",
-                   length(files),
-                   " files, and found",
-                   length(clean_libs),
-                   " package entries \n
-                   using either library, require, or double-colon notation.\n",
+                   crayon::blue(length(files)),
+                   " files, and found ",
+                   crayon::blue(length(clean_libs)),
+                   " package entries \n",
+                   "using either library, require, or double-colon notation.\n",
                    "Used packages are:\n"
         ),
-        clean_libs)
+        crayon::green(clean_libs))
     }
 
-
-    # if(length(clean_libs) == 0){
-    #
-    #     stop(paste0("scanned ",
-    #                 length(files),
-    #                 " file(s) and found no package use"))
-    #
 
 
     # } else {

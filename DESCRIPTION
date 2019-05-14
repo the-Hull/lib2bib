@@ -3,7 +3,7 @@ Title: Get your packages into your bibliography
 Version: 0.0.0.9000
 Authors@R: person('Alexander', 'Hurley', email = 'agl.hurley@gmail.com', role = c('cre', 'aut'), comment = c(ORCID = 0000-0002-9641-2805))
 Description: Identify all packages used in a (project) folder or file, and generate plain-text or bibtex bibliographies. An interactive app allows selecting a subset of packages to save.
-License: {{ License }}
+License: GPL-3
 URL: https://github.com/the-Hull/lib2bib/
 BugReports: https://github.com/the-Hull/lib2bib/issues
 Imports: 

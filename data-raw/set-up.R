@@ -39,7 +39,9 @@ my_desc$set("BugReports", "https://github.com/the-Hull/lib2bib/issues")
 my_desc$write(file = "DESCRIPTION")
 
 # If you want to use the MIT licence, code of conduct, and lifecycle badge
-use_mit_license(name = "Alexander Hurley")
+# use_mit_license(name = "Alexander Hurley")
+usethis::use_gpl3_license("Alexander Hurley")
+
 use_code_of_conduct()
 use_lifecycle_badge("Experimental")
 use_news_md()

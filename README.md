@@ -3,14 +3,22 @@
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![Travis build status](https://travis-ci.org/the-Hull/lib2bib.svg?branch=master)](https://travis-ci.org/the-Hull/lib2bib)
 
-The goal of lib2bib is to ...
+The package `lib2bib` aims to facilitate acknowledging developers of (open-source) software in the #rstats community. 
+Package development and maintenance require effort and time - most contributions are typically unpaid. 
+Hence, some recognition goes a long way. 
+`lib2bib` allows:
+- identifying all packages used in a directory/project, script or `Rmarkdown` files, 
+- printing them to console (or to a `list`)
+- writing a `.txt` or `.bib` file with the package bibliography
+
+An interactive app (via `lib_interactive()`) allows selecting packages for writing to a file.
 
 ## Installation
 
-You can install the released version of lib2bib from [CRAN](https://CRAN.R-project.org) with:
+You can install an early development  version of `lib2bib` from [GitHub](https://github.com/the-hull/lib2bib) with:
 
 ``` r
-install.packages("lib2bib")
+remotes::install_github("lib2bib")
 ```
 
 ## Example
@@ -18,6 +26,22 @@ install.packages("lib2bib")
 This is a basic example which shows you how to solve a common problem:
 
 ``` r
-## basic example code
+
+libs <- lib_find(path = ".", verbose = TRUE)
+# as text
+lib_print(libs, textformat = TRUE)
+# as bibtex
+lib_print(libs, textformat = FALSE)
+
+# to write to a file either
+lib_write(libs = libs, 
+          "package.bib",
+          append = FALSE, 
+          textformat = TRUE)
+# or
+lib_interactive(libs = libs, textformat = FALSE)
+
+
+
 ```
 

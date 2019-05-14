@@ -10,6 +10,8 @@
 #' @description The bibliography of identified packages can be saved in two formats (plain-text or bibtex). Currently, the function does not recognize the text format from the file ending, so ensure to set the argument appropriately.
 #'
 #' @export
+#' #' @importFrom attempt stop_if
+
 #'
 #' @examples \dontrun{
 #'
@@ -17,7 +19,10 @@
 #' }
 lib_write <- function(libs, path_out, append = FALSE, textformat = TRUE){
 
+    # safety checks to prevent unwanted over-writing
+    attempt::stop_if(file.exists(path_out) && isFALSE(append),
 
+                     msg = cat(paste0(crayon::red("File already exists."), " Set append to ", crayon::blue("TRUE"), " to over-write it.")))
 
 
     # open sink to capture output
