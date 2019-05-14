@@ -21,7 +21,7 @@ An interactive app via `lib_interactive()` allows selecting packages for writing
 You can install an early development  version of `lib2bib` from [GitHub](https://github.com/the-hull/lib2bib) with:
 
 ``` r
-remotes::install_github("lib2bib")
+remotes::install_github("the-hull/lib2bib")
 ```
 
 ## Example
