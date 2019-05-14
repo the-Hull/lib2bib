@@ -11,7 +11,7 @@ Hence, some recognition goes a long way.
 - printing them to console (or to a `list`)
 - writing a `.txt` or `.bib` file with the package bibliography
 
-An interactive app (via `lib_interactive()`) allows selecting packages for writing to a file.
+An interactive app via `lib_interactive()` allows selecting packages for writing to a file.
 
 ![](./img/lib_interactive.png)
 
