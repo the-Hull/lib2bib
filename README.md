@@ -1,4 +1,4 @@
-# lib2bib <img src="img/lib2bib_logo.png" align="right" width = "100"/>
+# lib2bib <img src="img/lib2bib_logo.png" align="right" width = "150"/>
 
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![Travis build status](https://travis-ci.org/the-Hull/lib2bib.svg?branch=master)](https://travis-ci.org/the-Hull/lib2bib)
