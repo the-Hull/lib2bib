@@ -47,4 +47,6 @@ lib_interactive(libs = libs, textformat = FALSE)
 
 
 ```
+## Contributions
 
+This package is in its very early stages and contributions as well as bug reports are very welcome!
